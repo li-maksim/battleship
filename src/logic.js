@@ -16,6 +16,83 @@ class Ship {
             return false
         }
     }
+} 
+
+class Gameboard {
+    createTable = function() {
+        const table = []
+        for (let i = 0; i < 10; i++) {
+            const row = []
+            for (let j = 0; j < 10; j++) {
+                row.push(0)
+            }
+            table.push(row)
+        }
+    
+        return table
+    }
+    constructor() {
+        this.table = this.createTable()
+        this.ships = []
+    }
+
+    checkIfAllShipsAreSunk = function() {
+        let result = true
+        for(let i; i < this.ships.length; i++) {
+            if (!this.ships[i].isSunk()) {
+                result = false
+            } 
+        }
+        return result
+    }
+
+    throwPlacingError = function() {
+        throw new Error('The ship cannot be placed near another ship')
+    }
+    placeShip = function(y, x, length, vertically = false) {
+        const newShip = new Ship(length)
+        this.ships.push(newShip)
+        const num = this.ships.length
+
+        if (!vertically) {
+            for (let i = 0; i <= x; i++) {
+                if (this.table[y - 1][x - 1 + i] != 0) {
+                    this.throwPlacingError()
+                    break
+                }
+            }
+
+            for (let i = 0; i < length; i++) {
+                this.table[y - 1][x - 1 + i] = num
+            }
+        } else {
+            for (let i = 0; i <= y; i++) {
+                if (this.table[y - 1 + i][x - 1] != 0) {
+                    this.throwPlacingError()
+                    break
+                }
+            }
+
+            for (let i = 0; i < length; i++) {
+                this.table[y - 1 + i][x - 1] = num
+            }
+        }
+    }
+
+    receiveAttack = function(y, x) {
+        if (this.table[y - 1][x - 1] === 0) {
+            this.table[y - 1][x - 1] = '#'
+            return 'Miss!'
+        } else {
+            const num = this.table[y - 1][x - 1] - 1
+            this.ships[num].hit()
+            this.table[y - 1][x - 1] = 'x'
+            if (this.checkIfAllShipsAreSunk()) {
+                return 'Game Over!'
+            }
+        }
+    }
 }
 
 module.exports.Ship = Ship
+module.exports.Gameboard = Gameboard
