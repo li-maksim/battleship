@@ -94,5 +94,12 @@ class Gameboard {
     }
 }
 
+class Player {
+    constructor(isRealPlayer) {
+        this.isRealPlayer = isRealPlayer
+        this.gameboard = new Gameboard()
+    }
+}
+
 module.exports.Ship = Ship
 module.exports.Gameboard = Gameboard
