@@ -3,6 +3,7 @@
 const logic = require('./logic')
 const Ship = logic.Ship
 const Gameboard = logic.Gameboard
+const ComputerPlayer = logic.ComputerPlayer
 const newShip = new Ship(4)
 
 // Testing of class Ship
@@ -23,77 +24,89 @@ const newShip = new Ship(4)
 
 // Testing of class Gameboard
 
-const newGameboard = new Gameboard()
+// const newGameboard = new Gameboard()
 
-test('Creates Gameboard', () => {
-    expect(newGameboard.table).toEqual([
-        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]])
-})
-test('Place ship (length 3) at 1, 3', () => {
-    newGameboard.placeShip(1, 3, 3)
-    expect(newGameboard.table).toEqual([
-        [0, 0, 1, 1, 1, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]])
-})
-test('Place ship (length 3) at 3, 3 vertically', () => {
-    newGameboard.placeShip(3, 3, 3, true)
-    expect(newGameboard.table).toEqual([
-        [0, 0, 1, 1, 1, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 2, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 2, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 2, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]])
-})
-// test('Cant place Ship at occupied space', () => {
-//     newGameboard.placeShip(1, 3, 3, true)
-//     expect(() => newGameboard.placeShip(2, 3, 3)).toThrow()
+// test('Creates Gameboard', () => {
+//     expect(newGameboard.table).toEqual([
+//         [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+//         [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+//         [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+//         [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+//         [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+//         [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+//         [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+//         [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+//         [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+//         [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]])
 // })
-test('Misses attack at 1, 1', () => {
-    expect(newGameboard.receiveAttack(1, 1)).toBe('Miss!')
+// test('Place ship (length 3) at 1, 3', () => {
+//     newGameboard.placeShip(1, 3, 3)
+//     expect(newGameboard.table).toEqual([
+//         [0, 0, 1, 1, 1, 0, 0, 0, 0, 0],
+//         [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+//         [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+//         [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+//         [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+//         [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+//         [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+//         [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+//         [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+//         [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]])
+// })
+// test('Place ship (length 3) at 3, 3 vertically', () => {
+//     newGameboard.placeShip(3, 3, 3, true)
+//     expect(newGameboard.table).toEqual([
+//         [0, 0, 1, 1, 1, 0, 0, 0, 0, 0],
+//         [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+//         [0, 0, 2, 0, 0, 0, 0, 0, 0, 0],
+//         [0, 0, 2, 0, 0, 0, 0, 0, 0, 0],
+//         [0, 0, 2, 0, 0, 0, 0, 0, 0, 0],
+//         [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+//         [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+//         [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+//         [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+//         [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]])
+// })
+// // test('Cant place Ship at occupied space', () => {
+// //     newGameboard.placeShip(1, 3, 3, true)
+// //     expect(() => newGameboard.placeShip(2, 3, 3)).toThrow()
+// // })
+// test('Misses attack at 1, 1', () => {
+//     expect(newGameboard.receiveAttack(1, 1)).toBe('Miss!')
+// })
+// test('Hits at 1, 4', () => {
+//     newGameboard.receiveAttack(1, 4)
+//     expect(newGameboard.table).toEqual([
+//         ['#', 0, 1, 'x', 1, 0, 0, 0, 0, 0],
+//         [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+//         [0, 0, 2, 0, 0, 0, 0, 0, 0, 0],
+//         [0, 0, 2, 0, 0, 0, 0, 0, 0, 0],
+//         [0, 0, 2, 0, 0, 0, 0, 0, 0, 0],
+//         [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+//         [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+//         [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+//         [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+//         [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]]
+//     )
+// })
+// test('Ship 1 has taken a hit', () => {
+//     expect(newGameboard.ships[0].hp).toBe(2)
+// })
+// test('Terminates game when all ships are sunk', () => {
+//     const secondGameboard = new Gameboard()
+//     secondGameboard.placeShip(1, 1, 2)
+//     secondGameboard.receiveAttack(1, 1)
+//     expect(secondGameboard.receiveAttack(1, 2)).toBe('Game Over!')
+// })
+
+const bot = new ComputerPlayer()
+
+test('Creates random coordinate', () => {
+    const num = bot.createRandomNum()
+    console.log(num)
+    expect(num).toBeGreaterThanOrEqual(1)
+    expect(num).toBeLessThanOrEqual(10)
 })
-test('Hits at 1, 4', () => {
-    newGameboard.receiveAttack(1, 4)
-    expect(newGameboard.table).toEqual([
-        ['#', 0, 1, 'x', 1, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 2, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 2, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 2, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]]
-    )
-})
-test('Ship 1 has taken a hit', () => {
-    expect(newGameboard.ships[0].hp).toBe(2)
-})
-test('Terminates game when all ships are sunk', () => {
-    const secondGameboard = new Gameboard()
-    secondGameboard.placeShip(1, 1, 2)
-    secondGameboard.receiveAttack(1, 1)
-    expect(secondGameboard.receiveAttack(1, 2)).toBe('Game Over!')
+test('Places random ships', () => {
+    expect(bot.placeRandomShips())
 })

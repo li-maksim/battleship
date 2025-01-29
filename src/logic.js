@@ -47,7 +47,7 @@ class Gameboard {
     }
 
     throwPlacingError = function() {
-        throw new Error('The ship cannot be placed near another ship')
+        throw new Error('The ship cannot be placed near another ship or go beyond gameboard')
     }
     placeShip = function(y, x, length, vertically = false) {
         const newShip = new Ship(length)
@@ -61,7 +61,12 @@ class Gameboard {
                     break
                 }
             }
-
+            for (let i = 0; i < length; i++) {
+                if (x + i > 10) {
+                    this.throwPlacingError()
+                    break
+                }
+            }
             for (let i = 0; i < length; i++) {
                 this.table[y - 1][x - 1 + i] = num
             }
@@ -72,7 +77,12 @@ class Gameboard {
                     break
                 }
             }
-
+            for (let i = 0; i < length; i++) {
+                if (y + i > 10) {
+                    this.throwPlacingError()
+                    break
+                }
+            }
             for (let i = 0; i < length; i++) {
                 this.table[y - 1 + i][x - 1] = num
             }
@@ -95,11 +105,39 @@ class Gameboard {
 }
 
 class Player {
-    constructor(isRealPlayer) {
-        this.isRealPlayer = isRealPlayer
+    constructor() {
         this.gameboard = new Gameboard()
+    }
+}
+
+class ComputerPlayer extends Player {
+    constructor() {
+        super()
+    }
+
+    createRandomNum = function() {
+        return Math.floor(Math.random() * 10 + 1)
+    }
+
+    createTrueOrFalse = function() {
+        if ((this.createRandomNum() % 2) > 0) {
+            return false
+        } else {
+            return true
+        }
+    }
+
+    placeRandomShips = function() {
+        try {
+            this.gameboard.placeShip(this.createRandomNum(), this.createRandomNum(), 4, this.createTrueOrFalse())
+        } catch(e) {
+            console.log('Oopsie!')
+            this.placeRandomShips()
+        }
     }
 }
 
 module.exports.Ship = Ship
 module.exports.Gameboard = Gameboard
+module.exports.Player = Player
+module.exports.ComputerPlayer = ComputerPlayer
