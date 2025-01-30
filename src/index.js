@@ -11,4 +11,5 @@ const ComputerPlayer = Logic.ComputerPlayer
 const realPlayer = new Player
 const botPlayer = new ComputerPlayer
 
+botPlayer.placeRandomShips()
 Interface.PlayerTables.createPlayerTables(realPlayer, botPlayer)

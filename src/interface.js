@@ -17,6 +17,7 @@ const PlayerTables = function() {
             for (let j = 0; j < one.gameboard.table[i].length; j++) {
                 const square = document.createElement('div')
                 square.setAttribute('class', 'square')
+                square.textContent = one.gameboard.table[i][j]
                 gameboard1.appendChild(square)
                 row.push(square)
             }
@@ -25,22 +26,16 @@ const PlayerTables = function() {
 
        for (let i = 0; i < two.gameboard.table.length; i++) {
         const row = []
-        for (let j = 0; j < two.gameboard.table[i]; j++) {
+        for (let j = 0; j < two.gameboard.table[i].length; j++) {
             const square = document.createElement('div')
             square.setAttribute('class', 'square')
+            square.textContent = two.gameboard.table[i][j]
             gameboard2.appendChild(square)
             row.push(square)
         }
         player2.push(row)
    }
     }
-
-    // const createPlayerTable = function(player) {
-    //     for (let i = 0; i < player.gameboard.table.length; i++) {
-    //         const row = []
-    //         for (let j = 0; j <)
-    //     }
-    // }
 
     return {player1, player2, createPlayerTables}
 }()
