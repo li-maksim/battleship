@@ -1,3 +1,5 @@
+import './style.css'
+
 const Logic = require('./logic')
 const Interface = require('./interface')
 

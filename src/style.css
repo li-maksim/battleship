@@ -1,9 +1,17 @@
 body {
-    margin 0
+    margin: 0;
+}
+
+.gameboard_wrapper {
+    height: 500px;
+    width: 500px;
+    display: grid;
+    grid-template-columns: repeat(10, 1fr);
+    grid-template-rows: repeat(10, 1fr);
 }
 
 .square {
     width: 40px;
     height: 40px;
-    border: 2px solid black
+    border: 2px solid black;
 }

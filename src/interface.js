@@ -4,33 +4,43 @@ const Ship = logic.Ship
 const Gameboard = logic.Gameboard
 const Player = logic.Player
 
-const body = document.querySelector('body')
-
 const PlayerTables = function() {
 
-    const gameboard1 = document.querySelector('.gameboard1')
-    const gameboard2 = document.querySelector('.gameboard2')
+    const gameboard1 = document.querySelector('#gameboard1')
+    const gameboard2 = document.querySelector('#gameboard2')
     const player1 = []
     const player2 = []
 
-    createTable = function(player, gameboard, array) {
-       for (let i = 0; i < player.gameboard.table.length; i++) {
+    const createPlayerTables = function(one, two) {
+        for (let i = 0; i < one.gameboard.table.length; i++) {
             const row = []
-            for (let j = 0; j < player.gameboard.table[i]; j++) {
+            for (let j = 0; j < one.gameboard.table[i].length; j++) {
                 const square = document.createElement('div')
                 square.setAttribute('class', 'square')
-                gameboard.appendChild(square)
+                gameboard1.appendChild(square)
                 row.push(square)
             }
-            array.push(row)
+            player1.push(row)
        }
+
+       for (let i = 0; i < two.gameboard.table.length; i++) {
+        const row = []
+        for (let j = 0; j < two.gameboard.table[i]; j++) {
+            const square = document.createElement('div')
+            square.setAttribute('class', 'square')
+            gameboard2.appendChild(square)
+            row.push(square)
+        }
+        player2.push(row)
+   }
     }
 
-    const createPlayerTables = function(one, two) {
-        createTable(one, gameboard1, player1)
-        createTable(two, gameboard2, player2)
-        return {player1, player2}
-    }
+    // const createPlayerTable = function(player) {
+    //     for (let i = 0; i < player.gameboard.table.length; i++) {
+    //         const row = []
+    //         for (let j = 0; j <)
+    //     }
+    // }
 
     return {player1, player2, createPlayerTables}
 }()
