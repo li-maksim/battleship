@@ -21,9 +21,25 @@ body {
 }
 
 .square {
+    box-sizing: border-box;
     width: 40px;
     height: 40px;
     border: 2px solid black;
     text-align: center;
     font-weight: 900;
+}
+
+.square:hover {
+    transform: scale(110%);
+}
+
+.controls {
+    display: flex;
+    gap: 10px;
+}
+
+.ship_control {
+    background-color: red;
+    width: 40px;
+    height: 40px;
 }
