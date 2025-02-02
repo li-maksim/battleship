@@ -37,13 +37,12 @@ class Gameboard {
     }
 
     checkIfAllShipsAreSunk = function() {
-        let result = true
-        for(let i; i < this.ships.length; i++) {
-            if (!this.ships[i].isSunk()) {
-                result = false
+        for(let i = 0; i < this.ships.length; i++) {
+            if (this.ships[i].isSunk() == false) {
+                return false
             } 
         }
-        return result
+        return true
     }
 
     throwPlacingError = function() {
@@ -100,12 +99,14 @@ class Gameboard {
             this.table[y - 1][x - 1] = '#'
             return 'Miss!'
         } else {
-            const num = this.table[y - 1][x - 1] - 1
-            this.ships[num].hit()
-            this.table[y - 1][x - 1] = 'x'
-            if (this.checkIfAllShipsAreSunk()) {
-                return 'Game Over!'
+            if (this.table[y - 1][x - 1] != '#' && this.table[y - 1][x - 1] != 'x') {
+                const idx = this.table[y - 1][x - 1]
+                this.ships[idx].hit()
+                this.table[y - 1][x - 1] = 'x'
             }
+            // if (this.checkIfAllShipsAreSunk()) {
+            //     return 'Game Over!'
+            // }
         }
     }
 }
@@ -147,6 +148,10 @@ class ComputerPlayer extends Player {
         this.placeRandomShip(2)
         this.placeRandomShip(1)
         console.log(this.gameboard)
+    }
+
+    doRandomAttack = function() {
+        realPlayer.gameboard.receiveAttack(this.createRandomNum(), this.createRandomNum())
     }
 }
 

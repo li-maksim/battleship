@@ -50,6 +50,20 @@ const PlayerTables = function() {
             if (two.gameboard.table[i][j] != 0) {
                 square.textContent = two.gameboard.table[i][j]
             }
+            square.dataset.y = i
+            square.dataset.x = j
+            square.addEventListener('click', () => {
+                botPlayer.gameboard.receiveAttack(parseInt(square.dataset.y) + 1, parseInt(square.dataset.x) + 1)
+                createPlayerTables(realPlayer, botPlayer)
+                if (botPlayer.gameboard.checkIfAllShipsAreSunk() == true) {
+                    alert('You Won!')
+                }
+                botPlayer.doRandomAttack()
+                setTimeout(() => {createPlayerTables(realPlayer, botPlayer)}, '400')
+                if (realPlayer.gameboard.checkIfAllShipsAreSunk() == true) {
+                    alert('You lost!')
+                }
+            })
             gameboard2.appendChild(square)
             row.push(square)
         }
