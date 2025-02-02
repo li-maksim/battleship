@@ -1,8 +1,7 @@
 const logic = require('./logic')
 
-const Ship = logic.Ship
-const Gameboard = logic.Gameboard
-const Player = logic.Player
+const realPlayer = logic.realPlayer
+const botPlayer = logic.botPlayer
 
 const PlayerTables = function() {
 
@@ -12,7 +11,13 @@ const PlayerTables = function() {
     const player2 = []
     let coordinatesPlayer1 = []
 
+    const clearPlayerTables = function() {
+        gameboard1.textContent = ''
+        gameboard2.textContent = ''
+    }
+
     const createPlayerTables = function(one, two) {
+        clearPlayerTables()
         for (let i = 0; i < one.gameboard.table.length; i++) {
             const row = []
             for (let j = 0; j < one.gameboard.table[i].length; j++) {
@@ -23,11 +28,14 @@ const PlayerTables = function() {
                 }
                 square.dataset.y = i
                 square.dataset.x = j
-                square.textContent = square.dataset.y + ' ' + square.dataset.x     
-                square.addEventListener('mouseenter', () => {
-                    coordinatesPlayer1[0] = square.dataset.y
-                    coordinatesPlayer1[1] = square.dataset.x
+                square.addEventListener('dragenter', () => {
+                    coordinatesPlayer1[0] = parseInt(square.dataset.y)
+                    coordinatesPlayer1[1] = parseInt(square.dataset.x)
+                    console.log(coordinatesPlayer1)
                 })  
+                square.addEventListener('mouseleave', () => {
+                    coordinatesPlayer1.length = 0
+                })
                 gameboard1.appendChild(square)
                 row.push(square)
             }
@@ -55,29 +63,29 @@ const PlayerTables = function() {
 const ControlsPanel = function() {
     const controlsDiv = document.querySelector('.controls')
     const placeControls = function() {
-        const ship4 = document.createElement('div')
-        ship4.setAttribute('class', 'ship_control')
-        const ship3 = document.createElement('div')
-        ship3.setAttribute('class', 'ship_control')
-        const ship2 = document.createElement('div')
-        ship2.setAttribute('class', 'ship_control')
-        const ship1 = document.createElement('div')
-        ship1.setAttribute('class', 'ship_control')
-        controlsDiv.appendChild(ship4)
-        controlsDiv.appendChild(ship3)
-        controlsDiv.appendChild(ship2)
-        controlsDiv.appendChild(ship1)
+        for (let i = 4; i > 0; i--) {
+            const shipControl = document.createElement('div')
+            shipControl.setAttribute('class', 'ship_control')
+            shipControl.draggable = 'true'
+            // shipControl.addEventListener('dragstart', () => {
+                
+            // })
+            shipControl.dataset.length = i
+            let length = shipControl.dataset.length
+            shipControl.addEventListener('dragend', () => {
+                if (PlayerTables.coordinatesPlayer1.length != 0) {
+                    shipControl.classList.add('hidden')
+                    console.log(PlayerTables.coordinatesPlayer1[0], PlayerTables.coordinatesPlayer1[1], parseInt(length))
+                    realPlayer.gameboard.placeShip(PlayerTables.coordinatesPlayer1[0], PlayerTables.coordinatesPlayer1[1], parseInt(length), true)
+                    PlayerTables.createPlayerTables(realPlayer, botPlayer)
+                }
+            })
+            controlsDiv.appendChild(shipControl)
+        }
     }
 
     return {placeControls}
 }()
-
-const controls = document.querySelectorAll('.ship_control')
-controls.forEach(function(item, idx) {
-    item.addEventListener('click', () => {
-        console.log('yup')
-    })
-})
 
 module.exports.PlayerTables = PlayerTables
 module.exports.ControlsPanel = ControlsPanel

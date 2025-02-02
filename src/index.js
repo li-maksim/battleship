@@ -8,10 +8,11 @@ const Gameboard = Logic.Gameboard
 const Player = Logic.Player
 const ComputerPlayer = Logic.ComputerPlayer
 
-const realPlayer = new Player
-const botPlayer = new ComputerPlayer
+const realPlayer = Logic.realPlayer
+const botPlayer = Logic.botPlayer
 
 botPlayer.placeRandomShips()
+realPlayer.gameboard.placeShip(3, 5, 4, true)
 Interface.PlayerTables.createPlayerTables(realPlayer, botPlayer)
 Interface.ControlsPanel.placeControls()
 

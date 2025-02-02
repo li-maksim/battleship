@@ -52,27 +52,29 @@ class Gameboard {
     placeShip = function(y, x, length, vertically = false) {
 
         if (!vertically) {
-            for (let i = 0; i <= x; i++) {
-                if (this.table[y - 1][x - 1 + i] != 0) {
+            for (let i = 0; i <= length; i++) {
+                if (this.table[y][x + i - 1] != 0) {
+                    console.log(y, x + 1)
                     this.throwPlacingError()
                     break
                 }
             }
             for (let i = 0; i < length; i++) {
-                if (x + i > 10) {
+                if (x + i > 11) {
+                    console.log(x + i)
                     this.throwPlacingError()
                     break
                 }
             }
         } else {
-            for (let i = 0; i <= y; i++) {
-                if (this.table[y - 1 + i][x - 1] != 0) {
+            for (let i = 0; i <= length; i++) {
+                if (this.table[y + i - 1][x] != 0) {
                     this.throwPlacingError()
                     break
                 }
             }
             for (let i = 0; i < length; i++) {
-                if (y + i > 10) {
+                if (y + i > 11) {
                     this.throwPlacingError()
                     break
                 }
@@ -84,11 +86,11 @@ class Gameboard {
 
         if (!vertically) {
             for (let i = 0; i < length; i++) {
-                this.table[y - 1][x - 1 + i] = num
+                this.table[y][x + i] = num
             }
         } else {
             for (let i = 0; i < length; i++) {
-                this.table[y - 1 + i][x - 1] = num
+                this.table[y + i][x] = num
             }
         }
     }
@@ -148,7 +150,12 @@ class ComputerPlayer extends Player {
     }
 }
 
+const realPlayer = new Player
+const botPlayer = new ComputerPlayer
+
 module.exports.Ship = Ship
 module.exports.Gameboard = Gameboard
 module.exports.Player = Player
 module.exports.ComputerPlayer = ComputerPlayer
+module.exports.realPlayer = realPlayer
+module.exports.botPlayer = botPlayer
