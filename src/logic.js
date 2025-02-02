@@ -100,7 +100,7 @@ class Gameboard {
             return 'Miss!'
         } else {
             if (this.table[y - 1][x - 1] != '#' && this.table[y - 1][x - 1] != 'x') {
-                const idx = this.table[y - 1][x - 1]
+                const idx = this.table[y - 1][x - 1] - 1
                 this.ships[idx].hit()
                 this.table[y - 1][x - 1] = 'x'
             }

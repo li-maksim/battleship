@@ -77,6 +77,12 @@ const PlayerTables = function() {
 const ControlsPanel = function() {
     const controlsDiv = document.querySelector('.controls')
     const placeControls = function() {
+
+        const label = document.createElement('label')
+        label.textContent = 'Horizontal'
+        const checkbox = document.createElement('input')
+        checkbox.type = 'checkbox'
+
         for (let i = 4; i > 0; i--) {
             const shipControl = document.createElement('div')
             shipControl.setAttribute('class', 'ship_control')
@@ -86,16 +92,35 @@ const ControlsPanel = function() {
             // })
             shipControl.dataset.length = i
             let length = shipControl.dataset.length
+            shipControl.style.height = `calc(40px * ${length})`
             shipControl.addEventListener('dragend', () => {
                 if (PlayerTables.coordinatesPlayer1.length != 0) {
                     shipControl.classList.add('hidden')
                     console.log(PlayerTables.coordinatesPlayer1[0], PlayerTables.coordinatesPlayer1[1], parseInt(length))
-                    realPlayer.gameboard.placeShip(PlayerTables.coordinatesPlayer1[0], PlayerTables.coordinatesPlayer1[1], parseInt(length), true)
+                    if (checkbox.checked) {
+                        realPlayer.gameboard.placeShip(PlayerTables.coordinatesPlayer1[0], PlayerTables.coordinatesPlayer1[1], parseInt(length), false)
+                    } else {
+                        realPlayer.gameboard.placeShip(PlayerTables.coordinatesPlayer1[0], PlayerTables.coordinatesPlayer1[1], parseInt(length), true)
+                    }
                     PlayerTables.createPlayerTables(realPlayer, botPlayer)
                 }
-            })
+            })  
+
             controlsDiv.appendChild(shipControl)
+
+            checkbox.addEventListener('click', () => {
+                if (checkbox.checked) {
+                    shipControl.style.height = '40px'
+                    shipControl.style.width = `calc(40px * ${length})`
+                } else {
+                    shipControl.style.height = `calc(40px * ${length})`
+                    shipControl.style.width = '40px'
+                }
+            })
         }
+
+        controlsDiv.appendChild(label)
+        controlsDiv.appendChild(checkbox)
     }
 
     return {placeControls}

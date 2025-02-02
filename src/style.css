@@ -45,18 +45,6 @@ body {
     cursor: move;
 }
 
-.ship_control:first-child {
-    height: 160px;
-}
-
-.ship_control:nth-child(2) {
-    height: 120px;
-}
-
-.ship_control:nth-child(3) {
-    height: 80px;
-}
-
 .hidden {
     display: none;
 }
