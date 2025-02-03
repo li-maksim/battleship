@@ -53,7 +53,6 @@ class Gameboard {
         if (!vertically) {
             for (let i = 0; i <= length; i++) {
                 if (this.table[y][x + i - 1] != 0) {
-                    console.log(y, x + 1)
                     this.throwPlacingError()
                     break
                 }
@@ -95,18 +94,25 @@ class Gameboard {
     }
 
     receiveAttack = function(y, x) {
-        if (this.table[y - 1][x - 1] === 0) {
+        const shipIdx = this.table[y - 1][x - 1]
+        if (shipIdx === 0) {
             this.table[y - 1][x - 1] = '#'
             return 'Miss!'
         } else {
-            if (this.table[y - 1][x - 1] != '#' && this.table[y - 1][x - 1] != 'x') {
-                const idx = this.table[y - 1][x - 1] - 1
+            const idx = shipIdx - 1
+            if (shipIdx != '#' && shipIdx != 'x') {
                 this.ships[idx].hit()
                 this.table[y - 1][x - 1] = 'x'
+                // if (this.ships[idx].isSunk() === true) {
+                //     for (let i = 0; i < this.table.length; i++) {
+                //         for (let j = 0; j < this.table[i].length; j++) {
+                //             if (this.table[i][j] == shipIdx) {
+                //                 this.table[i][j] = 's'
+                //             }
+                //         }
+                //     }
+                // }
             }
-            // if (this.checkIfAllShipsAreSunk()) {
-            //     return 'Game Over!'
-            // }
         }
     }
 }

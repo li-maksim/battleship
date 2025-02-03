@@ -26,6 +26,13 @@ const PlayerTables = function() {
                 if (one.gameboard.table[i][j] != 0) {
                     square.textContent = one.gameboard.table[i][j]
                 }
+                if (one.gameboard.table[i][j] == '#') {
+                    square.classList.add('miss')
+                } else if (one.gameboard.table[i][j] == 'x') {
+                    square.classList.add('hit')
+                } else if (one.gameboard.table[i][j] == 's') {
+                    square.classList.add('sunk')
+                }
                 square.dataset.y = i
                 square.dataset.x = j
                 square.addEventListener('dragenter', () => {
@@ -49,6 +56,13 @@ const PlayerTables = function() {
             square.setAttribute('class', 'square')
             if (two.gameboard.table[i][j] != 0) {
                 square.textContent = two.gameboard.table[i][j]
+            }
+            if (two.gameboard.table[i][j] == '#') {
+                square.classList.add('miss')
+            } else if (two.gameboard.table[i][j] == 'x') {
+                square.classList.add('hit')
+            } else if (two.gameboard.table[i][j] == 's') {
+                square.classList.add('sunk')
             }
             square.dataset.y = i
             square.dataset.x = j

@@ -39,7 +39,7 @@ body {
 }
 
 .ship_control {
-    background-color: rgba(250, 0, 0, 1);
+    background-color: rgba(0, 0, 250, 1);
     width: 40px;
     height: 40px;
     cursor: move;
@@ -47,4 +47,16 @@ body {
 
 .hidden {
     display: none;
+}
+
+.miss {
+    background-color: rgba(0, 0, 0, 0.1);
+}
+
+.hit {
+    background-color: rgba(250, 0, 0, 1);
+}
+
+.sunk {
+    background-color: rgba(0, 0, 0, 1);
 }
